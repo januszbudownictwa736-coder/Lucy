@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy 17th Birthday, Lucy ❤️</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: linear-gradient(135deg, #ff1744, #ff4f81, #ffb6c9);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Floating hearts */
+        .heart {
+            position: fixed;
+            bottom: -30px;
+            color: rgba(255,255,255,0.65);
+            font-size: 25px;
+            animation: floatUp linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes floatUp {
+            from {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+            }
+            to {
+                transform: translateY(-110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            z-index: 2;
+            animation: fadeIn 2s ease;
+        }
+
+        .small-title {
+            font-size: 1.2rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        h1 {
+            font-size: clamp(4rem, 12vw, 9rem);
+            line-height: 0.9;
+            font-family: Georgia, serif;
+            text-shadow: 0 10px 30px rgba(120, 0, 30, 0.3);
+        }
+
+        .seventeen {
+            color: #fff;
+            font-size: clamp(2rem, 6vw, 4rem);
+            margin: 25px 0;
+            font-weight: bold;
+        }
+
+        .date {
+            font-size: 1.3rem;
+            letter-spacing: 3px;
+            margin-bottom: 35px;
+        }
+
+        .hero-message {
+            font-size: 1.3rem;
+            max-width: 650px;
+            margin: auto;
+            line-height: 1.7;
+        }
+
+        .button {
+            display: inline-block;
+            margin-top: 35px;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 50px;
+            background: white;
+            color: #e91e4d;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(100,0,30,0.25);
+            transition: 0.3s;
+        }
+
+        .button:hover {
+            transform: translateY(-5px) scale(1.04);
+            box-shadow: 0 15px 40px rgba(100,0,30,0.35);
+        }
+
+        /* Sections */
+        section {
+            padding: 100px 25px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-inner {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .glass {
+            background: rgba(255,255,255,0.16);
+            border: 1px solid rgba(255,255,255,0.3);
+            backdrop-filter: blur(15px);
+            border-radius: 30px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(100,0,30,0.15);
+        }
+
+        h2 {
+            font-family: Georgia, serif;
+            text-align: center;
+            font-size: clamp(2.5rem, 7vw, 4.5rem);
+            margin-bottom: 30px;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        /* Letter */
+        .letter {
+            font-family: Georgia, serif;
+            font-size: 1.2rem;
+            line-height: 2;
+        }
+
+        .letter p {
+            margin-bottom: 20px;
+        }
+
+        .signature {
+            text-align: right;
+            font-size: 1.5rem;
+            margin-top: 30px;
+            font-style: italic;
+        }
+
+        /* Photo section */
+        .upload-area {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        #photoInput {
+            display: none;
+        }
+
+        .upload-button {
+            display: inline-block;
+            padding: 16px 30px;
+            border-radius: 50px;
+            background: white;
+            color: #e91e4d;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .upload-button:hover {
+            transform: scale(1.05);
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .photo-card {
+            aspect-ratio: 1 / 1;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(80,0,30,0.25);
+            animation: photoAppear 0.7s ease;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s;
+        }
+
+        .photo-card:hover img {
+            transform: scale(1.08);
+        }
+
+        /* Surprise */
+        .surprise-box {
+            text-align: center;
+        }
+
+        #surpriseMessage {
+            display: none;
+            margin-top: 30px;
+            font-family: Georgia, serif;
+            font-size: 1.5rem;
+            line-height: 1.8;
+            animation: fadeIn 1s ease;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 50px 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        footer p {
+            opacity: 0.9;
+        }
+
+        .big-heart {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.18);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes photoAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Mobile */
+        @media (max-width: 600px) {
+            .glass {
+                padding: 30px 20px;
+            }
+
+            section {
+                padding: 70px 15px;
+            }
+
+            .hero-message {
+                font-size: 1.05rem;
+            }
+
+            .letter {
+                font-size: 1.05rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Floating hearts -->
+    <div class="heart" style="left:5%; animation-duration:9s;">♥</div>
+    <div class="heart" style="left:15%; animation-duration:12s; animation-delay:2s;">♡</div>
+    <div class="heart" style="left:28%; animation-duration:10s; animation-delay:4s;">♥</div>
+    <div class="heart" style="left:42%; animation-duration:14s; animation-delay:1s;">♡</div>
+    <div class="heart" style="left:57%; animation-duration:11s; animation-delay:5s;">♥</div>
+    <div class="heart" style="left:70%; animation-duration:13s; animation-delay:3s;">♡</div>
+    <div class="heart" style="left:85%; animation-duration:9s; animation-delay:6s;">♥</div>
+
+    <!-- HERO -->
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="small-title">
+                A special day for someone special
+            </div>
+
+            <h1>Lucy</h1>
+
+            <div class="seventeen">
+                Happy 17th Birthday ❤️
+            </div>
+
+            <div class="date">
+                August 26, 2026
+            </div>
+
+            <p class="hero-message">
+                Today is all about you.
+                You deserve a day filled with happiness, laughter,
+                beautiful memories and all the love in the world.
+            </p>
+
+            <a href="#letter" class="button">
+                Open Your Birthday Message 💌
+            </a>
+
+        </div>
+
+    </section>
+
+    <!-- LETTER -->
+    <section id="letter">
+
+        <div class="section-inner">
+
+            <div class="glass">
+
+                <h2>For Lucy ❤️</h2>
+
+                <div class="letter">
+
+                    <p>
+                        Dear Lucy,
+                    </p>
+
+                    <p>
+                        Happy 17th Birthday! 🎂
+                    </p>
+
+                    <p>
+                        I hope today reminds you of just how special you are.
+                        You bring so much happiness into my life, and I am
+                        incredibly grateful for every moment we share together.
+                    </p>
+
+                    <p>
+                        Seventeen is the beginning of so many new memories,
+                        adventures and dreams. I hope this new chapter of your
+                        life is filled with beautiful moments, big smiles,
+                        unforgettable days and everything your heart wishes for.
+                    </p>
+
+                    <p>
+                        Thank you for being you. Thank you for the laughs,
+                        the little moments, the memories and all the things
+                        that make our time together so special.
+                    </p>
+
+                    <p>
+                        I hope you always remember that you deserve to be
+                        happy, loved and appreciated — not only today,
+                        but every single day.
+                    </p>
+
+                    <p>
+                        Happy Birthday, Lucy. ❤️
+                    </p>
+
+                    <div class="signature">
+                        With love,<br>
+                        Wojciech ❤️
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    
+
+    <!-- SURPRISE -->
+    <section>
+
+        <div class="section-inner">
+
+            <div class="glass surprise-box">
+
+                <h2>One More Thing... 💖</h2>
+
+                <p>
+                    I have a little birthday surprise for you.
+                </p>
+
+                <button class="button" onclick="showSurprise()">
+                    Click Here 🎁
+                </button>
+
+                <div id="surpriseMessage">
+
+                    <p>
+                        If I could give you one thing for your birthday,
+                        I would give you the ability to see yourself through
+                        my eyes — because then you would know just how
+                        amazing and beautiful you truly are. ❤️
+                    </p>
+
+                    <br>
+
+                    <p>
+                        Happy 17th Birthday, Lucy.
+                        Here's to many more memories together. 🥂
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+
+        <div class="big-heart">❤️</div>
+
+        <p>
+            Made with love by Wojciech for Lucy.
+        </p>
+
+        <p>
+            August 26, 2026
+        </p>
+
+    </footer>
+
+
+    <script>
+
+        /*
+         * PHOTO UPLOAD
+         *
+         * You can select as many photos as you want.
+         * They will appear automatically on the page.
+         */
+
+        const photoInput = document.getElementById("photoInput");
+        const photoGrid = document.getElementById("photoGrid");
+
+        photoInput.addEventListener("change", function(event) {
+
+            const files = event.target.files;
+
+            for (const file of files) {
+
+                if (!file.type.startsWith("image/")) {
+                    continue;
+                }
+
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+
+                    const card = document.createElement("div");
+                    card.className = "photo-card";
+
+                    const image = document.createElement("img");
+                    image.src = e.target.result;
+                    image.alt = "A beautiful memory";
+
+                    card.appendChild(image);
+                    photoGrid.appendChild(card);
+
+                };
+
+                reader.readAsDataURL(file);
+            }
+
+        });
+
+
+        /*
+         * SURPRISE MESSAGE
+         */
+
+        function showSurprise() {
+
+            const message = document.getElementById("surpriseMessage");
+
+            message.style.display = "block";
+
+            createExtraHearts();
+
+        }
+
+
+        /*
+         * EXTRA HEARTS WHEN THE SURPRISE IS OPENED
+         */
+
+        function createExtraHearts() {
+
+            for (let i = 0; i < 25; i++) {
+
+                const heart = document.createElement("div");
+
+                heart.innerHTML = Math.random() > 0.5 ? "❤️" : "💗";
+
+                heart.style.position = "fixed";
+                heart.style.left = Math.random() * 100 + "%";
+                heart.style.bottom = "-30px";
+                heart.style.fontSize = (15 + Math.random() * 30) + "px";
+                heart.style.zIndex = "999";
+                heart.style.pointerEvents = "none";
+
+                document.body.appendChild(heart);
+
+                const duration = 3000 + Math.random() * 3000;
+
+                heart.animate(
+                    [
+                        {
+                            transform: "translateY(0) scale(1)",
+                            opacity: 1
+                        },
+                        {
+                            transform:
+                                "translateY(-110vh) rotate(360deg) scale(1.5)",
+                            opacity: 0
+                        }
+                    ],
+                    {
+                        duration: duration,
+                        easing: "ease-out"
+                    }
+                );
+
+                setTimeout(() => {
+                    heart.remove();
+                }, duration);
+
+            }
+
+        }
+
+    </script>
+
+</body>
+</html>
